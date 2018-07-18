@@ -51,11 +51,24 @@ describe 'Testing the BBC' do
       @bbc_site_login.click_submit
       expect(@bbc_site_login.check_blank_password).to be true
       expect(@bbc_site_login.letters_password_error).to be true
-      @bbc_site_login.fill_invalid_email
+      @bbc_site_login.fill_unregistered_email
       @bbc_site_login.fill_password
       @bbc_site_login.click_submit
       expect(@bbc_site_login.check_blank_email).to be true
       expect(@bbc_site_login.invalid_email_error).to be true
+      @bbc_site_home.visit_home_page
+      @bbc_site_home.click_sign_in_link
+      @bbc_site_login.fill_not_email
+      @bbc_site_login.click_submit
+      expect(@bbc_site_login.check_blank_email).to be true
+      expect(@bbc_site_login.not_email_error).to be true
+      @bbc_site_home.visit_home_page
+      @bbc_site_home.click_sign_in_link
+      @bbc_site_login.fill_email
+      @bbc_site_login.fill_wrong_password
+      @bbc_site_login.click_submit
+      expect(@bbc_site_login.check_blank_password).to be true
+      expect(@bbc_site_login.incorrect_password_error).to be true
     end
 
   end

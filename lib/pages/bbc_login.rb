@@ -8,11 +8,13 @@ class BBCLogin
   EMAIL_INPUT = 'username'
   PASSWORD_INPUT = 'password'
   DUMMY_EMAIL = 'kse90017@molms.com'
-  FAIL_EMAIL = 'k'
+  SHORT_EMAIL = 'k'
   INVALID_EMAIL = 'hyuyfjhv@testingsdf.com'
+  NOT_EMAIL = 'hyuyfjhv@"testingsdf.com'
   DUMMY_PASSWORD = 'password1!'
   SHORT_PASSWORD = 'p'
   LETTERS_PASSWORD = 'password'
+  WRONG_PASSWORD = 'password1!oe'
   EMAIL_ERROR_ID = '#form-message-username'
   PASSWORD_ERROR_ID = '#form-message-password'
   GENERAL_ERROR_ID = '#form-message-general'
@@ -56,12 +58,17 @@ class BBCLogin
   end
 
   def fill_short_email
-    fill_in(EMAIL_INPUT, with: FAIL_EMAIL)
+    fill_in(EMAIL_INPUT, with: SHORT_EMAIL)
     sleep 1
   end
 
-  def fill_invalid_email
+  def fill_unregistered_email
     fill_in(EMAIL_INPUT, with: INVALID_EMAIL)
+    sleep 1
+  end
+
+  def fill_not_email
+    fill_in(EMAIL_INPUT, with: NOT_EMAIL)
     sleep 1
   end
 
@@ -72,6 +79,11 @@ class BBCLogin
 
   def fill_letters_password
     fill_in(PASSWORD_INPUT, with: LETTERS_PASSWORD)
+    sleep 1
+  end
+
+  def fill_wrong_password
+    fill_in(PASSWORD_INPUT, with: WRONG_PASSWORD)
     sleep 1
   end
 
@@ -99,6 +111,10 @@ class BBCLogin
     has_content?('Sorry, we can’t find an account with that email. You can register for a new account or get help here.')
   end
 
+  def not_email_error
+    has_content?('Sorry, that email doesn’t look right. Please check it\'s a proper email.')
+  end
+
   def short_password_error
     has_content?('Sorry, that password is too short. It needs to be eight characters or more.')
   end
@@ -109,6 +125,10 @@ class BBCLogin
 
   def mismatch_error
     has_content?('Sorry, those details don\'t match. Check you\'ve typed them correctly.')
+  end
+
+  def incorrect_password_error
+    has_content?('Uh oh, that password doesn’t match that account. Please try again.')
   end
 
 end
